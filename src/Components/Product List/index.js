@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import { fetchProductList } from "../../api";
-import { useQuery } from "react-query";
+import { fetchProductList, deleteProduct } from "../../api";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import moment from "moment";
-import { Table } from "antd";
+import { Table, Popconfirm } from "antd";
 import { Button, Box, Heading, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function ProductList() {
   const [isAdmin, setIsAdmin] = useState(true);
+  const queryClient = useQueryClient();
   const { isLoading, isError, data, error } = useQuery(
     "products",
     fetchProductList
   );
+  const deleteMutation = useMutation(deleteProduct, {
+    onSuccess: () => queryClient.invalidateQueries("products"),
+  });
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -97,11 +102,21 @@ function ProductList() {
             </Button>
           </Link>
           {isAdmin && (
-            <Box>
+            <Popconfirm
+              title="Are you sure to delete this product?"
+              onConfirm={() => {
+                deleteMutation.mutate(record.id, {
+                  onSuccess: () => {
+                    console.log(`Product ${record.name} deleted!`);
+                  },
+                });
+              }}
+              onCancel={() => console.log("Canceled!")}
+            >
               <Button colorScheme="red" variant="outline">
                 Delete
               </Button>
-            </Box>
+            </Popconfirm>
           )}
         </Box>
       ),
