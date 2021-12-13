@@ -39,17 +39,6 @@ function Card({ item }) {
           {item.price} - <small>Stokta: {item.stock}</small>
         </Box>
       </Box>
-      {/* </Link> */}
-      {/* <Button
-        mb="4"
-        leftIcon={
-          findBasketItem ? <MdRemoveShoppingCart /> : <MdAddShoppingCart />
-        }
-        colorScheme={findBasketItem ? "red" : "gray"}
-        onClick={() => addToBasket(item, findBasketItem)}
-      >
-        {findBasketItem ? "Remove from Basket" : "Add to basket"}
-      </Button> */}
     </Box>
   );
 }

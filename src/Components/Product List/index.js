@@ -1,10 +1,11 @@
 import React from "react";
+import { fetchProductList } from "../../api";
 import { useQuery } from "react-query";
 import moment from "moment";
 import { Table } from "antd";
 import { Button, Box, Heading } from "@chakra-ui/react";
-import { fetchProductList } from "../../api";
-import { isDate } from "moment";
+import { Link } from "react-router-dom";
+
 function ProductList() {
   const { isLoading, isError, data, error } = useQuery(
     "products",
@@ -90,11 +91,11 @@ function ProductList() {
       dataIndex: "action",
       render: (text, record) => (
         <Box>
-          {/* <Link to={`/gelecek-varlik-hr/${record.id}`}> */}
-          <Button colorScheme="gray" variant="outline">
-            İncele
-          </Button>
-          {/* </Link> */}
+          <Link to={`/product-list/${record.id}`}>
+            <Button colorScheme="gray" variant="outline">
+              İncele
+            </Button>
+          </Link>
         </Box>
       ),
     },

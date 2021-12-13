@@ -6,6 +6,12 @@ export const fetchProductList = async () => {
   );
   return data;
 };
+export const fetchProduct = async (id) => {
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_BASE_ENDPOINT}/product/${id}`
+  );
+  return data;
+};
 
 export const fetchCategoryList = async () => {
   const { data } = await axios.get(

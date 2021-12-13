@@ -6,6 +6,7 @@ import Login from "./Components/Login";
 import Categories from "./Components/Categories";
 import Users from "./Components/Users";
 import Products from "./Components/Products";
+import ProductDetail from "./ProductDetail";
 function App() {
   return (
     <Router>
@@ -15,6 +16,14 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Products />} />
             <Route path="/product-list" element={<ProductList />} />
+            <Route
+              path="product-list/:product_id"
+              element={<ProductDetail />}
+            />
+
+            {/*
+            <Route path="/product/:product_id" component={ProductDetail} />*/}
+
             <Route path="/categories" element={<Categories />} />
             <Route path="/users" element={<Users />} />
             <Route path="/login" element={<Login />} />
