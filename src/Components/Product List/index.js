@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { fetchProductList } from "../../api";
 import { useQuery } from "react-query";
 import moment from "moment";
 import { Table } from "antd";
-import { Button, Box, Heading } from "@chakra-ui/react";
+import { Button, Box, Heading, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 function ProductList() {
+  const [isAdmin, setIsAdmin] = useState(true);
   const { isLoading, isError, data, error } = useQuery(
     "products",
     fetchProductList
   );
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -87,15 +87,22 @@ function ProductList() {
       key: "iuser",
     },
     {
-      title: "İncele",
+      title: "Action",
       dataIndex: "action",
       render: (text, record) => (
-        <Box>
+        <Box display="flex" justifyContent="space-around">
           <Link to={`/product-list/${record.id}`}>
             <Button colorScheme="gray" variant="outline">
-              İncele
+              View
             </Button>
           </Link>
+          {isAdmin && (
+            <Box>
+              <Button colorScheme="red" variant="outline">
+                Delete
+              </Button>
+            </Box>
+          )}
         </Box>
       ),
     },
@@ -103,9 +110,26 @@ function ProductList() {
 
   return (
     <Box pt={5} mx={10}>
-      <Heading mb={5} textAlign="center">
-        Products
-      </Heading>
+      <Box textAlign="center">
+        <Heading mb={5} textAlign="center">
+          Products
+        </Heading>
+        <Button
+          size="sm"
+          colorScheme={isAdmin ? "red" : "blue"}
+          variant="solid"
+          onClick={() => setIsAdmin(!isAdmin)}
+        >
+          Switch User
+        </Button>
+        <Text mt={2} fontSize="sm">
+          Current User :{" "}
+          <span style={{ color: isAdmin ? "red" : "blue" }}>
+            {isAdmin ? "Admin" : "User"}
+          </span>
+        </Text>
+      </Box>
+
       {/* ANTD TABLE */}
       <Table
         rowClassName={(record, index) =>
