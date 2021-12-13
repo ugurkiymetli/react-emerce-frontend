@@ -26,7 +26,7 @@ function Users() {
   console.log(data);
   const columns = [
     {
-      title: "ID:",
+      title: "ID",
       dataIndex: "id",
       key: "id",
       responsive: ["sm"],
@@ -38,12 +38,24 @@ function Users() {
       responsive: ["sm"],
     },
     {
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
+      responsive: ["sm"],
+    },
+    {
+      title: "E-Mail",
+      dataIndex: "email",
+      key: "email",
+      responsive: ["sm"],
+    },
+    {
       title: "Insert Date",
       dataIndex: "idatetime",
       key: "idatetime",
       responsive: ["md"],
       render: (text, record) => {
-        return <p> {moment(record.idatetime).format("D:M:YYYY, h:m:s")}</p>;
+        return <p> {moment(record.idatetime).format("DD:MM:YYYY, hh:mm:s")}</p>;
       },
     },
     {

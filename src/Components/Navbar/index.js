@@ -19,6 +19,11 @@ function Navbar() {
             </Link>
           </li>
           <li>
+            <Link to="/product-list">
+              <Button variant="link">Product List</Button>
+            </Link>
+          </li>
+          <li>
             <Link to="/categories">
               <Button variant="link">Categories</Button>
             </Link>

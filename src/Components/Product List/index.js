@@ -2,22 +2,13 @@ import React from "react";
 import { useQuery } from "react-query";
 import moment from "moment";
 import { Table } from "antd";
-import {
-  Box,
-  Button,
-  // Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  TableCaption,
-  Heading,
-} from "@chakra-ui/react";
-import { fetchCategoryList } from "../../api";
-function Categories() {
+import { Button, Box, Heading } from "@chakra-ui/react";
+import { fetchProductList } from "../../api";
+import { isDate } from "moment";
+function ProductList() {
   const { isLoading, isError, data, error } = useQuery(
-    "categories",
-    fetchCategoryList
+    "products",
+    fetchProductList
   );
 
   if (isLoading) {
@@ -35,15 +26,33 @@ function Categories() {
       responsive: ["sm"],
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      responsive: ["sm"],
+    },
+    // {
+    //   title: "Name",
+    //   dataIndex: "name",
+    //   key: "name",
+    //   responsive: ["sm"],
+    // },
+    {
+      title: "Display Name",
+      dataIndex: "displayName",
+      key: "displayName",
       responsive: ["sm"],
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      responsive: ["sm"],
+    },
+    {
+      title: "Stock",
+      dataIndex: "stock",
+      key: "stock",
       responsive: ["sm"],
     },
     {
@@ -64,7 +73,7 @@ function Categories() {
         return (
           <p>
             {" "}
-            {record.udatetime == null
+            {record.udatetime == "0001-01-01T00:00:00"
               ? "-"
               : moment(record.udatetime).format("DD:MM:YYYY, hh:mm:s")}
           </p>
@@ -90,11 +99,13 @@ function Categories() {
       ),
     },
   ];
+
   return (
     <Box pt={5} mx={10}>
       <Heading mb={5} textAlign="center">
-        Categories
+        Products
       </Heading>
+      {/* ANTD TABLE */}
       <Table
         rowClassName={(record, index) =>
           index % 2 === 0 ? "table-row-light" : "table-row-dark"
@@ -104,27 +115,32 @@ function Categories() {
         columns={columns}
         rowKey="id"
       ></Table>
+      {/* CHAKRA TABLE */}
       {/* <Table variant="simple">
-        <TableCaption>
-          Emerce Categories - Total ({data.totalCount})
-        </TableCaption>
+        <TableCaption>Emerce Products - Total ({data.totalCount})</TableCaption>
         <Thead>
           <Tr>
             <Th textAlign="center">ID</Th>
-            <Th textAlign="center">Name</Th>
+            <Th textAlign="center">Category</Th>
             <Th textAlign="center">Description</Th>
-            <Th textAlign="center">Inserted User</Th>
+            <Th textAlign="center">Name</Th>
+            <Th textAlign="center">Display Name</Th>
+            <Th textAlign="center">Price</Th>
+            <Th textAlign="center">Stock</Th>
             <Th textAlign="center">Insert Date</Th>
-            <Th textAlign="center">Update Date</Th>
+            <Th textAlign="center">Inserted User</Th>
           </Tr>
         </Thead>
         <Tbody>
           {data.list.map((item) => (
             <Tr key={item.id}>
               <Th textAlign="center">{item.id}</Th>
-              <Th textAlign="center">{item.name}</Th>
+              <Th textAlign="center">{item.category}</Th>
               <Th textAlign="center">{item.description}</Th>
-              <Th textAlign="center">{item.iuser}</Th>
+              <Th textAlign="center">{item.name}</Th>
+              <Th textAlign="center">{item.displayName}</Th>
+              <Th textAlign="center">{item.price}</Th>
+              <Th textAlign="center">{item.stock}</Th>
               <Th textAlign="center">
                 {moment(item.idatetime).format("D:M:YYYY, h:m:s")}
               </Th>
@@ -133,6 +149,7 @@ function Categories() {
                   ? "-"
                   : moment(item.udatetime).format("D:M:YYYY, h:m:s")}
               </Th>
+              <Th textAlign="center">{item.iuser}</Th>
             </Tr>
           ))}
         </Tbody>
@@ -141,4 +158,4 @@ function Categories() {
   );
 }
 
-export default Categories;
+export default ProductList;
